@@ -67,12 +67,14 @@ class GutenbergMenuIcons {
 
 		wp_enqueue_style(
 			'themeisle-gutenberg-menu-icons',
-			plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/editor.css'
+			plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/editor.css',
+			array( 'font-awesome-5' )
 		);
 
 		wp_enqueue_style(
 			'themeisle-gutenberg-menu-icons-font-awesome',
-			plugins_url( '/', __FILE__ ) . 'assets/css/font-awesome.min.css'
+			plugins_url( '/', __FILE__ ) . 'assets/css/font-awesome.min.css',
+			array( 'font-awesome-5' )
 		);
 
 		wp_set_script_translations( 'themeisle-gutenberg-menu-icons', 'textdomain' );
@@ -109,7 +111,8 @@ class GutenbergMenuIcons {
 
 		wp_enqueue_style(
 			'themeisle-gutenberg-menu-icons-frontend',
-			plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/frontend.css'
+			plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/frontend.css',
+			array( 'font-awesome-5' )
 		);
 	}
 
