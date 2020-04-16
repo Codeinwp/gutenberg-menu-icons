@@ -3,7 +3,7 @@ branch: master
 plugins:
   - - "@semantic-release/commit-analyzer"
     - preset: simple-preset
-  releaseRules: conventional-changelog-simple-preset/release-rules
+      releaseRules: conventional-changelog-simple-preset/release-rules
   - - "@semantic-release/changelog"
     - changelogFile: CHANGELOG.md
   - - "@semantic-release/release-notes-generator"
