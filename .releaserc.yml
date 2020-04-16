@@ -12,10 +12,10 @@ plugins:
     - prepareCmd: grunt version::${nextRelease.version}
   - - "@semantic-release/git"
     - assets:
-    - CHANGELOG.md
-    - composer.json
-    - composer.lock
-    - load.php
-    - package-lock.json
-    - package.json
+      - CHANGELOG.md
+      - composer.json
+      - composer.lock
+      - load.php
+      - package-lock.json
+      - package.json
   - - "@semantic-release/github"
