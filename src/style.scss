@@ -8,6 +8,7 @@
 	}
 
 	&.wp-block-navigation-link__content {
+		font-family: inherit;
 		display: flex;
 		align-items: center;
 		font-weight: inherit;
@@ -15,6 +16,7 @@
 		-webkit-font-smoothing: inherit;
 
 		&:before {
+			font-family: "Font Awesome 5 Free";
 			margin-right: 5px;
 		}
 	}
@@ -24,7 +26,7 @@
 .far {
 	&.wp-block-navigation-link__content {
 		&:before {
-			font-weight: 400;	
+			font-weight: 400;
 		}
 	}
 }
@@ -33,6 +35,14 @@
 	&.wp-block-navigation-link__content {
 		&:before {
 			font-weight: 900;	
+		}
+	}
+}
+
+.fab {
+	&.wp-block-navigation-link__content {
+		&:before {
+			font-family: "Font Awesome 5 Brands";
 		}
 	}
 }
