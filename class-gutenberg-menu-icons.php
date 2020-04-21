@@ -93,10 +93,10 @@ class GutenbergMenuIcons {
 			return;
 		}
 
-		if ( THEMEISLE_GUTENBERG_ANIMATION_DEV ) {
+		if ( THEMEISLE_GUTENBERG_MENU_ICONS_DEV ) {
 			$version = time();
 		} else {
-			$version = THEMEISLE_GUTENBERG_ANIMATION_DEV;
+			$version = THEMEISLE_GUTENBERG_MENU_ICONS_VERSION;
 		}
 
 		if ( is_admin() ) {
