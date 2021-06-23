@@ -8,15 +8,15 @@ import MenuIconPickerControl from './control.js';
 /**
  * WordPress dependencies.
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { BlockControls } = wp.blockEditor;
+import { BlockControls } from '@wordpress/block-editor';
 
-const { createHigherOrderComponent } = wp.compose;
+import { createHigherOrderComponent } from '@wordpress/compose';
 
-const { Fragment } = wp.element;
+import { Fragment } from '@wordpress/element';
 
-const { addFilter } = wp.hooks;
+import { addFilter } from '@wordpress/hooks';
 
 const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 	return ( props ) => {
@@ -27,7 +27,7 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 
 					<BlockControls>
 						<MenuIconPickerControl
-							label={ __( 'Change Menu Icon' ) }
+							label={ __( 'Change Menu Icon', 'otter-blocks' ) }
 							classes={ props.attributes.className }
 							setAttributes={ props.setAttributes }
 						/>
@@ -40,4 +40,8 @@ const withBlockControls = createHigherOrderComponent( ( BlockEdit ) => {
 	};
 }, 'withInspectorControl' );
 
-addFilter( 'editor.BlockEdit', 'themeisle-menu-icons/with-blocks-controls', withBlockControls );
+addFilter(
+	'editor.BlockEdit',
+	'themeisle-menu-icons/with-blocks-controls',
+	withBlockControls
+);

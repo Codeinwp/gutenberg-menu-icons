@@ -6,25 +6,23 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
-const { withInstanceId } = wp.compose;
+import { withInstanceId } from '@wordpress/compose';
 
-const {
+import {
 	Button,
-	BaseControl,
 	Dropdown,
 	MenuGroup,
 	MenuItem,
 	TextControl,
+	ToolbarButton,
+	ToolbarGroup,
+	ToolbarItem,
 	Toolbar
-} = wp.components;
+} from '@wordpress/components';
 
-const {
-	Fragment,
-	useEffect,
-	useState
-} = wp.element;
+import { useEffect, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -40,12 +38,12 @@ const MenuIconPickerControl = ({
 	useEffect( () => {
 		let icons = [];
 
-		Object.keys( data ).forEach( i => {
-			Object.keys( data[i].styles ).forEach( o => {
+		Object.keys( data ).forEach( ( i ) => {
+			Object.keys( data[ i ].styles ).forEach( ( o ) => {
 				let prefix = '';
-				let terms = data[i].search.terms;
+				let terms = data[ i ].search.terms;
 
-				switch ( data[i].styles[o]) {
+				switch ( data[ i ].styles[ o ]) {
 				case 'brands':
 					prefix = 'fab';
 					break;
@@ -59,16 +57,13 @@ const MenuIconPickerControl = ({
 					prefix = 'fas';
 				}
 
-				terms.push(
-					i,
-					data[i].label
-				);
+				terms.push( i, data[ i ].label );
 
 				icons.push({
 					name: i,
-					unicode: data[i].unicode,
+					unicode: data[ i ].unicode,
 					prefix: prefix,
-					label: data[i].label,
+					label: data[ i ].label,
 					search: terms
 				});
 			});
@@ -78,8 +73,14 @@ const MenuIconPickerControl = ({
 
 		if ( classes ) {
 			const classList = classes.split( ' ' );
-			const prefix = classList.find( i => i.includes( 'fab' ) || i.includes( 'far' ) || i.includes( 'fas' ) ) || 'fas';
-			const icon = classList.find( i => i.includes( 'fa-' ) );
+			const prefix =
+				classList.find(
+					( i ) =>
+						i.includes( 'fab' ) ||
+						i.includes( 'far' ) ||
+						i.includes( 'fas' )
+				) || 'fas';
+			const icon = classList.find( ( i ) => i.includes( 'fa-' ) );
 
 			if ( icon ) {
 				setPrefix( prefix );
@@ -112,7 +113,7 @@ const MenuIconPickerControl = ({
 		setIcon( `fa-${ i.name }` );
 	};
 
-	const onRemoveIcon = onToggle => {
+	const onRemoveIcon = ( onToggle ) => {
 		onToggle();
 		let classList = classes ? classes.split( ' ' ) : [];
 		classList.splice( classList.indexOf( prefix ), 1 );
@@ -128,22 +129,20 @@ const MenuIconPickerControl = ({
 	};
 
 	return (
-		<Dropdown
-			contentClassName="wp-block-themeisle-blocks-menu-icon-picker-popover"
-			position="bottom center"
-			renderToggle={ ({ isOpen, onToggle }) => (
-				<Toolbar>
-					<Button
-						className="components-toolbar__control"
-						label={ label }
-						showTooltip={ true }
+		<ToolbarGroup>
+			<Dropdown
+				contentClassName="wp-block-themeisle-blocks-menu-icon-picker-popover"
+				position="bottom center"
+				renderToggle={ ({ isOpen, onToggle }) => (
+					<ToolbarButton
+						label={ __( 'Menu Icons', 'otter-blocks' ) }
+						showTooltip
 						onClick={ () => {
 							onToggle();
 							setPopoverOpen( true );
 						} }
-						aria-expanded={ isOpen }
 					>
-						{ ( prefix && icon ) ? (
+						{ prefix && icon ? (
 							<i
 								className={ classnames(
 									prefix,
@@ -152,60 +151,71 @@ const MenuIconPickerControl = ({
 								) }
 							/>
 						) : (
-							<i className="fas fa-icons fa-fw"/>
+							<i className="fas fa-icons fa-fw" />
 						) }
-					</Button>
-				</Toolbar>
-			) }
-			renderContent={ ({ onToggle }) => (
-				<MenuGroup label={ __( 'Menu Icons by Otter' ) }>
-					<TextControl
-						label={ 'Search Icons' }
-						hideLabelFromVision={ true }
-						placeholder={ 'Search Icons' }
-						value={ search }
-						onChange={ setSearch }
-					/>
-
-					<div
-						className="components-popover__items"
+					</ToolbarButton>
+				) }
+				renderContent={ ({ onToggle }) => (
+					<MenuGroup
+						label={ __( 'Menu Icons by Otter', 'otter-blocks' ) }
 					>
-						{ ( icon && prefix && ! search ) && (
-							<MenuItem
-								label={ __( 'None' ) }
-								showTooltip={ true }
-								onClick={ () => onRemoveIcon( onToggle ) }
-							>
-								<i className="fas fa-times fa-fw remove-icon"/>
-							</MenuItem>
-						) }
+						<TextControl
+							label={ ( 'Search Icons', 'otter-blocks' ) }
+							hideLabelFromVision={ true }
+							placeholder={ ( 'Search Icons', 'otter-blocks' ) }
+							value={ search }
+							onChange={ setSearch }
+						/>
 
-						{ ( icons ).map( i => {
-							if ( ! search || i.search.some( o => o.toLowerCase().match( search.toLowerCase() ) ) ) {
-								return (
-									<MenuItem
-										label={ i.label }
-										showTooltip={ true }
-										className={ classnames(
-											{ 'is-selected': ( `fa-${ i.name }` === icon && i.prefix === prefix ) }
-										) }
-										onClick={ () => onSelectIcon( onToggle, i ) }
-									>
-										<i
-											className={ classnames(
-												i.prefix,
-												`fa-${ i.name }`,
-												'fa-fw'
-											) }
-										/>
-									</MenuItem>
-								);
-							}
-						}) }
-					</div>
-				</MenuGroup>
-			) }
-		/>
+						<div className="components-popover__items">
+							{ icon && prefix && ! search && (
+								<MenuItem
+									label={ __( 'None', 'otter-blocks' ) }
+									showTooltip={ true }
+									onClick={ () => onRemoveIcon( onToggle ) }
+								>
+									<i className="fas fa-times fa-fw remove-icon" />
+								</MenuItem>
+							) }
+
+							{ icons.map( ( i ) => {
+								if (
+									! search ||
+								i.search.some( ( o ) =>
+									o
+										.toLowerCase()
+										.match( search.toLowerCase() )
+								)
+								) {
+									return (
+										<MenuItem
+											label={ i.label }
+											showTooltip={ true }
+											className={ classnames({
+												'is-selected':
+												`fa-${ i.name }` === icon &&
+												i.prefix === prefix
+											}) }
+											onClick={ () =>
+												onSelectIcon( onToggle, i )
+											}
+										>
+											<i
+												className={ classnames(
+													i.prefix,
+													`fa-${ i.name }`,
+													'fa-fw'
+												) }
+											/>
+										</MenuItem>
+									);
+								}
+							}) }
+						</div>
+					</MenuGroup>
+				) }
+			/>
+		</ToolbarGroup>
 	);
 };
 
