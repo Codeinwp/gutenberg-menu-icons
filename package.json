@@ -1,6 +1,6 @@
 {
 	"name": "themeisle-gutenberg-menu-icons",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"description": "Menu Icons for Gutenberg",
 	"scripts": {
 		"build": "wp-scripts build src/index.js src/frontend.js --output-path=build",
