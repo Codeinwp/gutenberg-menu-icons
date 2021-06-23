@@ -51,35 +51,31 @@ class GutenbergMenuIcons {
 			return;
 		}
 
-		if ( THEMEISLE_GUTENBERG_MENU_ICONS_DEV ) {
-			$version = time();
-		} else {
-			$version = THEMEISLE_GUTENBERG_MENU_ICONS_VERSION;
-		}
+		$asset_file = include plugin_dir_path( __FILE__ ) . 'build/index.asset.php';
 
 		wp_enqueue_script(
 			'themeisle-gutenberg-menu-icons',
-			plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/editor.js',
-			array( 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-compose', 'wp-editor', 'wp-element', 'wp-hooks' ),
-			$version,
+			plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/index.js',
+			$asset_file['dependencies'],
+			$asset_file['version'],
 			true
 		);
 
 		wp_enqueue_style(
 			'themeisle-gutenberg-menu-icons',
-			plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/editor.css',
+			plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/index.css',
 			array( 'font-awesome-5' ),
-			$version
+			$asset_file['version']
 		);
 
 		wp_enqueue_style(
 			'themeisle-gutenberg-menu-icons-font-awesome',
 			plugins_url( '/', __FILE__ ) . 'assets/css/font-awesome.min.css',
 			array( 'font-awesome-5' ),
-			$version
+			$asset_file['version']
 		);
 
-		wp_set_script_translations( 'themeisle-gutenberg-menu-icons', 'textdomain' );
+		wp_set_script_translations( 'themeisle-gutenberg-menu-icons', 'otter-blocks' );
 	}
 
 	/**
@@ -93,29 +89,25 @@ class GutenbergMenuIcons {
 			return;
 		}
 
-		if ( THEMEISLE_GUTENBERG_MENU_ICONS_DEV ) {
-			$version = time();
-		} else {
-			$version = THEMEISLE_GUTENBERG_MENU_ICONS_VERSION;
-		}
-
 		if ( is_admin() ) {
 			return;
 		}
 
+		$asset_file = include plugin_dir_path( __FILE__ ) . 'build/frontend.asset.php';
+
 		wp_enqueue_script(
 			'themeisle-gutenberg-menu-icons-frontend',
 			plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/frontend.js',
-			array(),
-			$version,
+			$asset_file['dependencies'],
+			$asset_file['version'],
 			true
 		);
 
 		wp_enqueue_style(
 			'themeisle-gutenberg-menu-icons-frontend',
-			plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/frontend.css',
+			plugin_dir_url( $this->get_dir() ) . $this->slug . '/build/style-frontend.css',
 			array( 'font-awesome-5' ),
-			$version
+			$asset_file['version']
 		);
 	}
 
@@ -160,7 +152,7 @@ class GutenbergMenuIcons {
 	 */
 	public function __clone() {
 		// Cloning instances of the class is forbidden.
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'textdomain' ), '1.0.0' );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'otter-blocks' ), '1.0.0' );
 	}
 
 	/**
@@ -172,6 +164,6 @@ class GutenbergMenuIcons {
 	 */
 	public function __wakeup() {
 		// Unserializing instances of the class is forbidden.
-		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'textdomain' ), '1.0.0' );
+		_doing_it_wrong( __FUNCTION__, esc_html__( 'Cheatin&#8217; huh?', 'otter-blocks' ), '1.0.0' );
 	}
 }
